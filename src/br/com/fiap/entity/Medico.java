@@ -3,6 +3,18 @@ package br.com.fiap.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="hospital", catalog="db_30817")
 public class Medico implements Serializable {
 	
 	/**
@@ -10,10 +22,21 @@ public class Medico implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@Column(name="CRM", unique=true, nullable=false)
 	private String crm;
-	private String medico;
+	
+	@Column(name="NOME")
+	private String nome;
+	
+	@Column(name="ESPECIALIDADE")
 	private String especialidade;
+	
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="ID_HOSPITAL")
 	private Hospital hospital;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="medico", fetch=FetchType.LAZY)
 	private List<Paciente> pacientes;
 	
 	
@@ -23,12 +46,7 @@ public class Medico implements Serializable {
 	public void setCrm(String crm) {
 		this.crm = crm;
 	}
-	public String getMedico() {
-		return medico;
-	}
-	public void setMedico(String medico) {
-		this.medico = medico;
-	}
+	
 	public String getEspecialidade() {
 		return especialidade;
 	}
@@ -46,6 +64,12 @@ public class Medico implements Serializable {
 	}
 	public void setPacientes(List<Paciente> pacientes) {
 		this.pacientes = pacientes;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }
