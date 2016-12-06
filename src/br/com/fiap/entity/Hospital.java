@@ -1,6 +1,7 @@
 package br.com.fiap.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -18,6 +20,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="hospital", catalog="db_30817", uniqueConstraints={
 		@UniqueConstraint(columnNames="NOME")
 })
+@NamedQuery(name="Hospital.findAll", query="select h from Hospital h")
 public class Hospital implements Serializable{
 	
 	/**
@@ -37,7 +40,7 @@ public class Hospital implements Serializable{
 	private String especialidade;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="hospital", fetch=FetchType.LAZY)
-	private List<Medico> medicos;
+	private List<Medico> medicos = new ArrayList<>();
 	
 	
 	public int getId() {
@@ -65,5 +68,9 @@ public class Hospital implements Serializable{
 		this.medicos = medicos;
 	}
 	
+	@Override
+	public String toString() {
+		return this.getNome();
+	}
 
 }

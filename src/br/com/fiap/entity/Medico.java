@@ -1,6 +1,7 @@
 package br.com.fiap.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,11 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="hospital", catalog="db_30817")
+@Table(name="medico", catalog="db_30817")
+@NamedQuery(name="Medico.findAll", query="select m from Medico m")
 public class Medico implements Serializable {
 	
 	/**
@@ -37,7 +40,7 @@ public class Medico implements Serializable {
 	private Hospital hospital;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="medico", fetch=FetchType.LAZY)
-	private List<Paciente> pacientes;
+	private List<Paciente> pacientes = new ArrayList<>();
 	
 	
 	public String getCrm() {
@@ -70,6 +73,11 @@ public class Medico implements Serializable {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	@Override
+	public String toString() {
+		return "CRM: " + this.crm + " - " + this.getNome();
 	}
 
 }

@@ -1,7 +1,6 @@
 package br.com.fiap.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,11 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="hospital", catalog="db_30817")
+@Table(name="paciente", catalog="db_30817")
 public class Paciente implements Serializable{
 	
 	/**
@@ -30,12 +27,8 @@ public class Paciente implements Serializable{
 	@Column(name="NOME")
 	private String nome;
 	
-	@Column(name="NOME")
+	@Column(name="ENDERECO")
 	private String endereco;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULTIMA_CONSULTA")
-	private Date dataUltimaConsulta;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="CRM_MEDICO")
@@ -59,12 +52,6 @@ public class Paciente implements Serializable{
 	}
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
-	}
-	public Date getDataUltimaConsulta() {
-		return dataUltimaConsulta;
-	}
-	public void setDataUltimaConsulta(Date dataUltimaConsulta) {
-		this.dataUltimaConsulta = dataUltimaConsulta;
 	}
 	public Medico getMedico() {
 		return medico;
